@@ -3,84 +3,68 @@ import string
 
 class VigenereCipher:
 
+    @staticmethod
+    def isascii(token):
+        return token in string.ascii_letters
+
     def __init__(self):
         self.alphabet = list(string.ascii_lowercase)
 
     def encrypt(self, plain_text, key):
 
-        # Checking for bad entries which would make things go wrong.
-        if len(key) > len(plain_text):
-            return "Your key must be less or equal to the length of the plain text you want to encrypt."
-
-        if len(key) < 1 or len(plain_text) < 1:
-            return "Your key and the plain text you want to encrypt must be at least of one character."
-
-        key_count = 0
-        key_length = len(key)
-        cipher_text = []
-
-        # Looping through the plain text.
-        for token in plain_text:
-            # First verify if the token is a letter.
-            if not token.isalpha():
-                cipher_text.append(token)
-                key_count += 1
-                continue
-
-            # Verify we are not going to go further in the string.
-            if key_count >= key_length:
-                key_count = 0
-
-            cipher_text.append(self.encrypt_token(token, key[key_count]))
-
-            key_count += 1
-
-        return ''.join(map(str, cipher_text))
+        return self.act_on_text(self.decrypt_token, plain_text, key)
 
     def decrypt(self, cipher_text, key):
 
-        if len(key) > len(cipher_text):
+        return self.act_on_text(self.encrypt_token, cipher_text, key)
+
+    def act_on_text(self, action, text, key):
+
+        if len(key) > len(text):
             return "Your key must be less or equal to the length of the cipher text you want to decrypt."
 
-        if len(key) < 1 or len(cipher_text) < 1:
-            return "Your key and the cipher text you want to encrypt must be at least of one character."
+        if not key.isalpha():
+            return "Your key must just be composed of letters."
+
+        if len(key) < 1 or len(text) < 1:
+            return "Your key and the text must be at least of one character."
 
         key_count = 0
         key_length = len(key)
-        plain_text = []
+        final_text = []
 
-        for token in cipher_text:
-            print(token)
-            if not token.isAlpha():
-                print("Not alpha")
-                cipher_text.append(token)
+        for token in text:
+            if not self.isascii(token):
+                final_text.append(token)
                 key_count += 1
                 continue
 
             if key_count >= key_length:
                 key_count = 0
 
-            plain_text.append(self.decrypt_token(token, key[key_count]))
+            final_text.append(self.act_on_token(action,token, key[key_count]))
 
             key_count += 1
 
-        return ', '.join(map(str, plain_text))
+        return ''.join(map(str, final_text))
 
-    def encrypt_token(self, token, key):
+    def encrypt_token(self, token_id, key_id):
 
-        isupper = token.isupper()              # Check if it's uppercase
+        return self.alphabet[(token_id + key_id) % 26]
 
-        # We get corresponding id and don't forget to make char given lowercase.
-        #print(token)
+    def decrypt_token(self, token_id, key_id):
+
+        return self.alphabet[(token_id - key_id) % 26]
+
+    def act_on_token(self, action, token, key):
+
+        is_token_upper = token.isupper()
         token_id = self.alphabet.index(token.lower())
         key_id = self.alphabet.index(key.lower())
 
-        encrypted_cipher = self.alphabet[(token_id + key_id) % 26]
+        workable_token = action(token_id, key_id)
 
-        if isupper:
-            return encrypted_cipher.upper()
+        if is_token_upper:
+            return workable_token.upper()
 
-        return encrypted_cipher
-
-    def decrypt_token(self, token, key):
-        return (token - key) % 26
+        return workable_token
