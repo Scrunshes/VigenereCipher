@@ -10,12 +10,16 @@ def isascii(token):
 
 def calculate_keys_of(length, text):
 
+    if length == 0:
+        return None
+
     keys = []
 
-    for index in range(length):
-        keys[index] = []
-
     for index in range(text):
+
+        if not keys[index]:
+            keys[index % length] = []
+
         keys[index % length] = text[index]
 
     return keys

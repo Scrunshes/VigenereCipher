@@ -2,11 +2,14 @@ from stringUtils import *
 import mathUtils
 
 
-def cryptanalysis(text):
+def cryptanalysis(text, max_length):
     original_text_ic = mathUtils.ic_compute(text)
-    print(original_text_ic)
-    # ics = [indexofcoincidence for ]
+    keys = []
 
+    print(original_text_ic)
+
+    for index in range(max_length):
+        #keys[index] =
 
 def encrypt(plain_text, key):
 
