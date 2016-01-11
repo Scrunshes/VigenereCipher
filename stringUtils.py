@@ -3,11 +3,12 @@ import string
 
 alphabet = list(string.ascii_lowercase)
 
+
 def isascii(token):
     return token in string.ascii_letters
 
 
-def calculateKeysOf(length, text):
+def calculate_keys_of(length, text):
 
     keys = []
 
@@ -15,4 +16,6 @@ def calculateKeysOf(length, text):
         keys[index] = []
 
     for index in range(text):
-        if (index)
+        keys[index % length] = text[index]
+
+    return keys

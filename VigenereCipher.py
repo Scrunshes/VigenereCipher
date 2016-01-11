@@ -1,8 +1,9 @@
 from stringUtils import *
 import mathUtils
 
+
 def cryptanalysis(text):
-    original_text_ic = mathUtils.iccompute(text)
+    original_text_ic = mathUtils.ic_compute(text)
     print(original_text_ic)
     # ics = [indexofcoincidence for ]
 
@@ -28,22 +29,18 @@ def act_on_text(action, text, key):
     if len(key) < 1 or len(text) < 1:
         return "Your key and the text must be at least of one character."
 
-    key_count = 0
+    # key_count = 0
     key_length = len(key)
     final_text = []
+    index = -1
 
     for token in text:
+        index += 1
         if not isascii(token):
             final_text.append(token)
-            key_count += 1
             continue
 
-        if key_count >= key_length:
-            key_count = 0
-
-        final_text.append(act_on_token(action,token, key[key_count]))
-
-        key_count += 1
+        final_text.append(act_on_token(action, token, key[index % key_length]))
 
     return ''.join(map(str, final_text))
 

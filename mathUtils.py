@@ -4,7 +4,7 @@ import unicodedata
 from stringUtils import *
 
 
-def findallindices(raw_pattern, text):
+def find_all_indices(raw_pattern, text):
 
     pattern = re.escape(raw_pattern)
 
@@ -17,14 +17,14 @@ def findallindices(raw_pattern, text):
     return occurrences
 
 
-def iccompute(raw_text):
+def ic_compute(raw_text):
 
     text = unicodedata.normalize('NFKD', re.sub('\W+', '', raw_text)).encode('ascii', 'ignore').decode('ascii')
 
     alphabet_length = len(alphabet)
     text_length = len(text)
 
-    occurrences_count = [findallindices(letter, text) for letter in alphabet]
+    occurrences_count = [find_all_indices(letter, text) for letter in alphabet]
 
     sum_of_occurrence_frequency = 0
 
