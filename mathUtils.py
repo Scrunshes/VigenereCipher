@@ -4,6 +4,12 @@ from stringUtils import alphabet
 
 
 def find_all_indices(raw_pattern, text):
+    """
+    Trouve tous les indices d'un pattern dans un texte.
+    :param raw_pattern(str): le pattern (regex) brut.
+    :param text(str): le texte.
+    :return: le nombre d'occurence du pattern.
+    """
 
     pattern = re.escape(raw_pattern)
 
@@ -17,6 +23,11 @@ def find_all_indices(raw_pattern, text):
 
 
 def ic_compute(raw_text):
+    """
+    Calcule l'indice de coincidence du texte.
+    :param raw_text (str): texte sur lequel doit être calculé l'indice de coincidence.
+    :return: l'indice de coincidence.
+    """
 
     text = stringUtils.normalize_text(raw_text)
 

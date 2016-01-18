@@ -1,6 +1,21 @@
 import VigenereCipher
 
+
 while True:
+    try:
+        cryptanalysis = int(input("Entrer 1 si vous voulez calculer l'indice de coincidence d'un texte :"))
+    except ValueError:
+        print("Veuillez présenter un choix correct.")
+
+    if cryptanalysis == 1:
+        try:
+            cipher = str(input("Enter le message en question :"))
+        except ValueError:
+            print("Veuillez entrer un message correct.")
+
+        print("L'indice de coincidence de votre message est de ", VigenereCipher.cryptanalysis(cipher))
+        continue
+
     try:
         key = str(input('Présenter la clé à utiliser :'))
     except ValueError:

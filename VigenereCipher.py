@@ -3,42 +3,21 @@ from stringUtils import alphabet
 import mathUtils
 
 
-def compute_ic_of_keys(text, max_length):
-
-    if max_length == 0:
-        return None
-
-    keys_ic = []
-
-    for length in range(max_length):
-
-        for index in range(len(text)):
-
-            if not index % length in keys_ic:
-                keys_ic.append([])
-
-            keys_ic[index % length].append(text[index])
-
-        return keys_ic
-
-
-def cryptanalysis(raw_text, max_length):
+def cryptanalysis(raw_text):
+    """
+    Effectue la première étape de l'analyse du chiffrement.
+    :param raw_text(str): texte donné.
+    :return: l'indice de coincidence du texte permettant d'avoir une idée de la langue.
+    """
     text = stringUtils.normalize_text(raw_text)
-    original_text_ic = mathUtils.ic_compute(text)
-
-    print(original_text_ic)
-
-    print(compute_ic_of_keys(text, max_length))
-
-    #for index in range(max_length):
-        #keys[index] =
+    return mathUtils.ic_compute(text)
 
 
 def encrypt(plain_text, key):
     """
     Appelle la fonction act_on_text avec comme action le chiffrement du texte.
     :param plain_text (str): le texte clair.
-    :param key: la clé.
+    :param key(str): la clé.
     :return (str): le texte chiffré.
     """
     return act_on_text(encrypt_token, plain_text, key)
