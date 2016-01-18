@@ -1,7 +1,6 @@
 import re
-import unicodedata
-
-from stringUtils import *
+import stringUtils
+from stringUtils import alphabet
 
 
 def find_all_indices(raw_pattern, text):
@@ -19,7 +18,7 @@ def find_all_indices(raw_pattern, text):
 
 def ic_compute(raw_text):
 
-    text = unicodedata.normalize('NFKD', re.sub('\W+', '', raw_text)).encode('ascii', 'ignore').decode('ascii')
+    text = stringUtils.normalize_text(raw_text)
 
     alphabet_length = len(alphabet)
     text_length = len(text)
